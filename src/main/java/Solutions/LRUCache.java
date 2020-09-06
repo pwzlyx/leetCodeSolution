@@ -1,7 +1,5 @@
 package Solutions;
 
-import sun.jvm.hotspot.debugger.windbg.DLL;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +17,7 @@ public class LRUCache {
         }
     }
 
-    private int capacity;
+    private final int capacity;
     private Map<Integer, DLinkedNode> map;
     private DLinkedNode head, tail;
 
@@ -51,14 +49,50 @@ public class LRUCache {
             moveToHead(node);
         }else{
             DLinkedNode node = new DLinkedNode(key, value);
+            //没有，新增，并且判断是否超长；超长删除尾节点；
             if (map.size() == this.capacity){
                 //remove队尾节点
+                DLinkedNode tailNode = removeTail();
+                map.remove(tailNode.key);
+                //hash表删除
+
             }
             map.put(key, node);
             addToHead(node);
         }
-        //没有，新增，并且判断是否超长；超长删除尾节点；
+    }
 
-        //更新链表位置
+    private DLinkedNode removeTail() {
+        DLinkedNode tailNode = this.tail.prev;
+        removeNode(tailNode);
+        return tailNode;
+    }
+
+    private void moveToHead(DLinkedNode node) {
+        removeNode(node);
+        addToHead(node);
+    }
+
+    private void addToHead(DLinkedNode node) {
+        node.next = this.head.next;
+        node.next.prev = node;
+        this.head.next = node;
+        node.prev = this.head;
+    }
+
+    private void removeNode(DLinkedNode node) {
+        DLinkedNode preNode = node.prev;
+        DLinkedNode nextNode = node.next;
+        preNode.next = nextNode;
+        nextNode.prev = preNode;
+    }
+
+    public static void main(String[] args) {
+        LRUCache lruCache = new LRUCache(2);
+        lruCache.put(1,1);
+        lruCache.put(2,2);
+        System.out.println(lruCache.get(1));
+        lruCache.put(3,3);
+        System.out.println(lruCache.get(2));
     }
 }

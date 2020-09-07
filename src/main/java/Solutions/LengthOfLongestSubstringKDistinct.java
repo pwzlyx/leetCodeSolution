@@ -62,7 +62,7 @@ public class LengthOfLongestSubstringKDistinct {
 
     public static void main(String[] args) {
         LengthOfLongestSubstringKDistinct lengthOfLongestSubstringKDistinct = new LengthOfLongestSubstringKDistinct();
-        int res = lengthOfLongestSubstringKDistinct.lengthOfLongestSubstringKDistinct("ab", 1);
+        int res = lengthOfLongestSubstringKDistinct.lengthOfLongestSubstringKDistinct("AAAA", 1);
         System.out.println(res);
     }
 }

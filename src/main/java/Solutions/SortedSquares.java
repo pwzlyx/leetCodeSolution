@@ -38,10 +38,51 @@ public class SortedSquares {
         return res;
     }
 
+    public int[] squares(int[] A){
+        if (A.length == 0){
+            return null;
+        }
+        int i = 0, j=0;
+        while (i < A.length && A[i] < 0){
+            i++;
+        }
+        int[] res = new int[A.length];
+        int left = i-1;
+        int right = i;
+
+        while (left >= 0 && right < A.length){
+            if ((A[left]*A[left]) > (A[right]*A[right])){
+                res[j] = A[right]*A[right];
+                right++;
+            }else {
+                res[j] = A[left]*A[left];
+                left--;
+            }
+            j++;
+        }
+
+        while (left >= 0){
+           res[j] = A[left]*A[left];
+           left--;
+           j++;
+        }
+        while (right < A.length){
+            res[j] = A[right]*A[right];
+            right++;
+            j++;
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         SortedSquares sortedSquares = new SortedSquares();
-        int[] A = {4,-1,0,3,10};
-        int[] res = sortedSquares.sortedSquares(A);
-        System.out.println(A);
+        int[] A = {0,2};
+        //int[] res = sortedSquares.sortedSquares(A);
+        //System.out.println(A);
+        int[] res = sortedSquares.squares(A);
+        for (int a: res
+             ) {
+            System.out.print(a+",");
+        }
     }
 }

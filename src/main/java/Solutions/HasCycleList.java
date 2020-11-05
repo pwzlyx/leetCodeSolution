@@ -11,14 +11,14 @@ public class HasCycleList {
         slow.next = head;
         fast.next = head;
 
-        if (head.next == null){
+        if (head == null && head.next == null){
             return false;
         }
 
-        slow.next = slow.next.next;
 
-        while (slow.next != null && fast.next.next != null){
+        while (slow.next.next != null && fast.next.next != null){
             fast.next = fast.next.next.next;
+            slow.next = slow.next.next;
             if (fast.next == null){
                 return false;
             }else if (slow.next == fast.next){
@@ -26,6 +26,36 @@ public class HasCycleList {
             }
         }
         return false;
+    }
+
+    public ListNode hasCycle2(ListNode head){
+        ListNode slow = new ListNode(0);
+        ListNode fast = new ListNode(0);
+
+        slow.next = head;
+        fast.next = head;
+
+        if (head == null || head.next == null){
+            return null;
+        }
+
+
+        while (slow.next.next != null && fast.next.next != null){
+            fast.next = fast.next.next.next;
+            slow.next = slow.next.next;
+            if (fast.next == null){
+                return null;
+            }else if (slow.next == fast.next){
+                ListNode listNode = new ListNode(0);
+                listNode.next = head;
+                while (listNode.next != slow.next){
+                    listNode.next = listNode.next.next;
+                    slow.next = slow.next.next;
+                }
+                return slow.next;
+            }
+        }
+        return null;
     }
 
     public static void main(String[] args) {
